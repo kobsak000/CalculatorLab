@@ -19,7 +19,7 @@ namespace CPE200Lab1
         private string firstOperand;
         
         private string operate="0";
-       
+        
         CalculatorEngine calculatorEngine = new CalculatorEngine { };
 
         private void resetAll()
@@ -29,6 +29,7 @@ namespace CPE200Lab1
             hasDot = false;
             isAfterOperater = false;
             isAfterEqual = false;
+            operate = "0";
         }
 
        
@@ -80,16 +81,31 @@ namespace CPE200Lab1
             }
             if (operate != "0")
             {
-                string secondOperand = lblDisplay.Text;
-                firstOperand = calculatorEngine.calculate(operate, firstOperand, secondOperand);
-                operate = ((Button)sender).Text;
-                lblDisplay.Text = "";
-                lblDisplay.Text = firstOperand;
-                isAfterEqual = true;
-                return;
+                if (((Button)sender).Text == "%")
+                {
+                    string secondOperand = lblDisplay.Text;
+                    double x=Convert.ToDouble(secondOperand)* Convert.ToDouble(firstOperand)/100;
+                    secondOperand = Convert.ToString(x);
+                    firstOperand = calculatorEngine.calculate(operate, firstOperand, secondOperand);
+                    lblDisplay.Text = "";
+                    lblDisplay.Text = firstOperand;
+                    isAfterEqual = true;
+                    operate = "0";
+                }
+                else
+                {
+                    string secondOperand = lblDisplay.Text;
+                    firstOperand = calculatorEngine.calculate(operate, firstOperand, secondOperand);
+                    operate = ((Button)sender).Text;
+                    lblDisplay.Text = "";
+                    lblDisplay.Text = firstOperand;
+                    isAfterEqual = true;
+                }
+                    return;
             }
             else 
                 {
+                
                 operate = ((Button)sender).Text;
                     switch (operate)
                     {
@@ -103,6 +119,7 @@ namespace CPE200Lab1
                         break;
                     case "%":
                         // your code here
+                        
                         break;
                     }
                 }
@@ -112,23 +129,30 @@ namespace CPE200Lab1
 
         private void btnEqual_Click(object sender, EventArgs e)
         {
-            if (lblDisplay.Text is "Error")
+            if (operate == "0")
             {
-                return;
-            }
-            string secondOperand = lblDisplay.Text;
-            string result = calculatorEngine.calculate(operate, firstOperand, secondOperand);
-            if (result is "E" || result.Length > 8)
-            {
-                lblDisplay.Text = "Error";
+
             }
             else
             {
-                lblDisplay.Text = result;
+                if (lblDisplay.Text is "Error")
+                {
+                    return;
+                }
+                string secondOperand = lblDisplay.Text;
+                string result = calculatorEngine.calculate(operate, firstOperand, secondOperand);
+                if (result is "E" || result.Length > 8)
+                {
+                    lblDisplay.Text = "Error";
+                }
+                else
+                {
+                    lblDisplay.Text = result;
+                }
+                isAfterEqual = true;
+                operate = "0";
             }
-            isAfterEqual = true;
-            operate = "0";
-        }
+            }
 
         private void btnDot_Click(object sender, EventArgs e)
         {

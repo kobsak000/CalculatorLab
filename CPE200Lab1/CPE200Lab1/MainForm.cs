@@ -57,9 +57,9 @@ namespace CPE200Lab1
                 lblDisplay.Text = "0";
                 isAllowBack = true;
                 hasDot = false;
-                isAfterOperater = true;
+                isAfterOperater = false;
                 isAfterEqual = false;
-                
+                morethan2 = false;
             }
             if (isAfterOperater)
             {
@@ -81,8 +81,7 @@ namespace CPE200Lab1
 
         private void btnOperator_Click(object sender, EventArgs e)
         {
-            if(isAfterEqual)
-                operate= ((Button)sender).Text;
+
             if (lblDisplay.Text is "Error")
             {
                 return;
@@ -96,7 +95,7 @@ namespace CPE200Lab1
                 if (((Button)sender).Text == "%")
                 {
                     string secondOperand = lblDisplay.Text;
-                    double x=Convert.ToDouble(secondOperand)* Convert.ToDouble(firstOperand)/100;
+                    double x = Convert.ToDouble(secondOperand) * Convert.ToDouble(firstOperand) / 100;
                     secondOperand = Convert.ToString(x);
                     firstOperand = calculatorEngine.calculate(operate, firstOperand, secondOperand);
                     lblDisplay.Text = "";
@@ -113,14 +112,14 @@ namespace CPE200Lab1
                     lblDisplay.Text = firstOperand;
                     morethan2 = true;
                 }
-                    return;
+                return;
             }
-            else 
-                {
-                
+            else
+            {
+
                 operate = ((Button)sender).Text;
-                    switch (operate)
-                    {
+                switch (operate)
+                {
                     case "+":
                     case "-":
                     case "X":
@@ -131,12 +130,16 @@ namespace CPE200Lab1
                         break;
                     case "%":
                         // your code here
-                        
-                        break;
-                    }
-                }
-                isAllowBack = false;
 
+                        break;
+                }
+            }
+            isAllowBack = false;
+            if (isAfterEqual)
+            {
+                operate = ((Button)sender).Text;
+                isAfterEqual = false;
+            }
         }
 
         private void btnEqual_Click(object sender, EventArgs e)
@@ -162,6 +165,7 @@ namespace CPE200Lab1
                     lblDisplay.Text = result;
                 }
                 isAfterEqual = true;
+                morethan2 = false;
                 operate = "0";
             }
             }

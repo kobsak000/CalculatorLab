@@ -12,6 +12,7 @@ namespace CPE200Lab1
 {
     public partial class MainForm : Form
     {
+        private bool morethan2;
         private bool hasDot;
         private bool isAllowBack;
         private bool isAfterOperater;
@@ -51,6 +52,15 @@ namespace CPE200Lab1
             {
                 resetAll();
             }
+            if(morethan2)
+            {
+                lblDisplay.Text = "0";
+                isAllowBack = true;
+                hasDot = false;
+                isAfterOperater = true;
+                isAfterEqual = false;
+                
+            }
             if (isAfterOperater)
             {
                 lblDisplay.Text = "0";
@@ -71,6 +81,8 @@ namespace CPE200Lab1
 
         private void btnOperator_Click(object sender, EventArgs e)
         {
+            if(isAfterEqual)
+                operate= ((Button)sender).Text;
             if (lblDisplay.Text is "Error")
             {
                 return;
@@ -89,7 +101,7 @@ namespace CPE200Lab1
                     firstOperand = calculatorEngine.calculate(operate, firstOperand, secondOperand);
                     lblDisplay.Text = "";
                     lblDisplay.Text = firstOperand;
-                    isAfterEqual = true;
+                    morethan2 = true;
                     operate = "0";
                 }
                 else
@@ -99,7 +111,7 @@ namespace CPE200Lab1
                     operate = ((Button)sender).Text;
                     lblDisplay.Text = "";
                     lblDisplay.Text = firstOperand;
-                    isAfterEqual = true;
+                    morethan2 = true;
                 }
                     return;
             }

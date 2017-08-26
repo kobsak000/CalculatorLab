@@ -81,25 +81,33 @@ namespace CPE200Lab1
             if (operate != "0")
             {
                 string secondOperand = lblDisplay.Text;
-
                 firstOperand = calculatorEngine.calculate(operate, firstOperand, secondOperand);
+                operate = ((Button)sender).Text;
+                lblDisplay.Text = "";
+                lblDisplay.Text = firstOperand;
+                isAfterEqual = true;
                 return;
             }
-            operate = ((Button)sender).Text;
-            switch (operate)
-            {
-                case "+":
-                case "-":
-                case "X":
-                case "÷":
-                    firstOperand = lblDisplay.Text;
-                    isAfterOperater = true;
-                    break;
-                case "%":
-                    // your code here
-                    break;
-            }
-            isAllowBack = false;
+            else 
+                {
+                operate = ((Button)sender).Text;
+                    switch (operate)
+                    {
+                    case "+":
+                    case "-":
+                    case "X":
+                    case "÷":
+
+                        firstOperand = lblDisplay.Text;
+                        isAfterOperater = true;
+                        break;
+                    case "%":
+                        // your code here
+                        break;
+                    }
+                }
+                isAllowBack = false;
+
         }
 
         private void btnEqual_Click(object sender, EventArgs e)
@@ -119,6 +127,7 @@ namespace CPE200Lab1
                 lblDisplay.Text = result;
             }
             isAfterEqual = true;
+            operate = "0";
         }
 
         private void btnDot_Click(object sender, EventArgs e)

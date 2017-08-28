@@ -249,5 +249,30 @@ namespace CPE200Lab1
                 }
             }
         }
+
+        private void btnsqrt_Click(object sender, EventArgs e)
+        {
+            if(operate=="0")
+            {
+                firstOperand = lblDisplay.Text;
+                double x= Convert.ToDouble(firstOperand);
+                x=Math.Sqrt(x);
+                firstOperand=Convert.ToString(x);
+                lblDisplay.Text = firstOperand;
+            }
+            else
+            {
+                string secondOperand = lblDisplay.Text;
+                double x = Convert.ToDouble(secondOperand) ;
+                x = Math.Sqrt(x);
+                secondOperand = Convert.ToString(x);
+                firstOperand = calculatorEngine.calculate(operate, firstOperand, secondOperand);
+                lblDisplay.Text = "";
+                lblDisplay.Text = firstOperand;
+                morethan2 = true;
+                operate = "0";
+            }
+
+        }
     }
 }

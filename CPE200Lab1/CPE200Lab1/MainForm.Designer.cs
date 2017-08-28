@@ -50,6 +50,7 @@
             this.btnBack = new System.Windows.Forms.Button();
             this.lblDisplay = new System.Windows.Forms.Label();
             this.btnsqrt = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btn7
@@ -309,7 +310,7 @@
             // btnsqrt
             // 
             this.btnsqrt.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnsqrt.Location = new System.Drawing.Point(518, 182);
+            this.btnsqrt.Location = new System.Drawing.Point(517, 182);
             this.btnsqrt.Margin = new System.Windows.Forms.Padding(4);
             this.btnsqrt.Name = "btnsqrt";
             this.btnsqrt.Size = new System.Drawing.Size(117, 79);
@@ -318,11 +319,24 @@
             this.btnsqrt.UseVisualStyleBackColor = true;
             this.btnsqrt.Click += new System.EventHandler(this.btnsqrt_Click);
             // 
+            // button1
+            // 
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.Location = new System.Drawing.Point(517, 269);
+            this.button1.Margin = new System.Windows.Forms.Padding(4);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(117, 79);
+            this.button1.TabIndex = 22;
+            this.button1.Text = "1/x";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.divinex);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(668, 624);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.btnsqrt);
             this.Controls.Add(this.lblDisplay);
             this.Controls.Add(this.btnBack);
@@ -377,6 +391,7 @@
         private System.Windows.Forms.Button btnBack;
         private System.Windows.Forms.Label lblDisplay;
         private System.Windows.Forms.Button btnsqrt;
+        private System.Windows.Forms.Button button1;
     }
 }
 

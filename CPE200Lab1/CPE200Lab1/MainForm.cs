@@ -30,6 +30,7 @@ namespace CPE200Lab1
             hasDot = false;
             isAfterOperater = false;
             isAfterEqual = false;
+            morethan2 = false;
             operate = "0";
         }
 
@@ -81,7 +82,7 @@ namespace CPE200Lab1
 
         private void btnOperator_Click(object sender, EventArgs e)
         {
-
+            
             if (lblDisplay.Text is "Error")
             {
                 return;
@@ -150,6 +151,10 @@ namespace CPE200Lab1
             }
             else
             {
+                if(morethan2)
+                {
+                    return;
+                }
                 if (lblDisplay.Text is "Error")
                 {
                     return;
@@ -259,6 +264,7 @@ namespace CPE200Lab1
                 x=Math.Sqrt(x);
                 firstOperand=Convert.ToString(x);
                 lblDisplay.Text = firstOperand;
+                isAfterEqual = true;
             }
             else
             {
@@ -271,6 +277,34 @@ namespace CPE200Lab1
                 lblDisplay.Text = firstOperand;
                 morethan2 = true;
                 operate = "0";
+                morethan2 = true;
+            }
+
+        }
+
+        private void divinex(object sender, EventArgs e)
+        {
+            if (operate == "0")
+            {
+                firstOperand = lblDisplay.Text;
+                double x = Convert.ToDouble(firstOperand);
+                x =1/x;
+                firstOperand = Convert.ToString(x);
+                lblDisplay.Text = firstOperand;
+                isAfterEqual = true;
+            }
+            else
+            {
+                string secondOperand = lblDisplay.Text;
+                double x = Convert.ToDouble(secondOperand);
+                x = 1 / x;
+                secondOperand = Convert.ToString(x);
+                firstOperand = calculatorEngine.calculate(operate, firstOperand, secondOperand);
+                lblDisplay.Text = "";
+                lblDisplay.Text = firstOperand;
+                morethan2 = true;
+                operate = "0";
+                morethan2 = true;
             }
 
         }

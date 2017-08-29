@@ -130,8 +130,14 @@ namespace CPE200Lab1
                         isAfterOperater = true;
                         break;
                     case "%":
-                        // your code here
-
+                        firstOperand = lblDisplay.Text;
+                        double x = Convert.ToDouble(firstOperand);
+                        x=x / 100;
+                        firstOperand=Convert.ToString(x);
+                        lblDisplay.Text = firstOperand;
+                        operate = "0";
+                        isAfterEqual = true;
+                        return ;
                         break;
                 }
             }

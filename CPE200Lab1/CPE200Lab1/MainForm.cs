@@ -12,16 +12,14 @@ namespace CPE200Lab1
 {
     public partial class MainForm : Form
     {
-        private bool morethan2;
         private bool hasDot;
         private bool isAllowBack;
         private bool isAfterOperater;
         private bool isAfterEqual;
         private string firstOperand;
-        
-        private string operate="0";
-        
-        CalculatorEngine calculatorEngine = new CalculatorEngine { };
+        private string operate;
+        private double memory;
+        private CalculatorEngine engine;
 
         private void resetAll()
         {
@@ -30,16 +28,16 @@ namespace CPE200Lab1
             hasDot = false;
             isAfterOperater = false;
             isAfterEqual = false;
-            morethan2 = false;
-            operate = "0";
+            firstOperand = null;
         }
 
-       
+      
 
         public MainForm()
         {
             InitializeComponent();
-
+            memory = 0;
+            engine = new CalculatorEngine();
             resetAll();
         }
 
@@ -52,15 +50,6 @@ namespace CPE200Lab1
             if (isAfterEqual)
             {
                 resetAll();
-            }
-            if(morethan2)
-            {
-                lblDisplay.Text = "0";
-                isAllowBack = true;
-                hasDot = false;
-                isAfterOperater = false;
-                isAfterEqual = false;
-                morethan2 = false;
             }
             if (isAfterOperater)
             {
@@ -80,9 +69,8 @@ namespace CPE200Lab1
             isAfterOperater = false;
         }
 
-        private void btnOperator_Click(object sender, EventArgs e)
+        private void btnUnaryOperator_Click(object sender, EventArgs e)
         {
-            
             if (lblDisplay.Text is "Error")
             {
                 return;
@@ -91,82 +79,34 @@ namespace CPE200Lab1
             {
                 return;
             }
-            if (operate != "0")
+            operate = ((Button)sender).Text;
+            firstOperand = lblDisplay.Text;
+            string result = engine.unaryCalculate(operate, firstOperand);
+            if (result is "E" || result.Length > 8)
             {
-                if (((Button)sender).Text == "%")
-                {
-                    string secondOperand = lblDisplay.Text;
-                    double x = Convert.ToDouble(secondOperand) * Convert.ToDouble(firstOperand) / 100;
-                    secondOperand = Convert.ToString(x);
-                    firstOperand = calculatorEngine.calculate(operate, firstOperand, secondOperand);
-                    lblDisplay.Text = "";
-                    lblDisplay.Text = firstOperand;
-                    morethan2 = true;
-                    operate = "0";
-                }
-                else
-                {
-                    string secondOperand = lblDisplay.Text;
-                    firstOperand = calculatorEngine.calculate(operate, firstOperand, secondOperand);
-                    operate = ((Button)sender).Text;
-                    lblDisplay.Text = "";
-                    lblDisplay.Text = firstOperand;
-                    morethan2 = true;
-                }
-                return;
+                lblDisplay.Text = "Error";
             }
             else
             {
-
-                operate = ((Button)sender).Text;
-                switch (operate)
-                {
-                    case "+":
-                    case "-":
-                    case "X":
-                    case "÷":
-
-                        firstOperand = lblDisplay.Text;
-                        isAfterOperater = true;
-                        break;
-                    case "%":
-                        firstOperand = lblDisplay.Text;
-                        double x = Convert.ToDouble(firstOperand);
-                        x=x / 100;
-                        firstOperand=Convert.ToString(x);
-                        lblDisplay.Text = firstOperand;
-                        operate = "0";
-                        isAfterEqual = true;
-                        return ;
-                        break;
-                }
+                lblDisplay.Text = result;
             }
-            isAllowBack = false;
-            if (isAfterEqual)
-            {
-                operate = ((Button)sender).Text;
-                isAfterEqual = false;
-            }
+
         }
 
-        private void btnEqual_Click(object sender, EventArgs e)
+        private void btnOperator_Click(object sender, EventArgs e)
         {
-            if (operate == "0")
+            if (lblDisplay.Text is "Error")
             {
-
+                return;
             }
-            else
+            if (isAfterOperater)
             {
-                if(morethan2)
-                {
-                    return;
-                }
-                if (lblDisplay.Text is "Error")
-                {
-                    return;
-                }
+                return;
+            }
+            if(firstOperand != null)
+            {
                 string secondOperand = lblDisplay.Text;
-                string result = calculatorEngine.calculate(operate, firstOperand, secondOperand);
+                string result = engine.calculate(operate, firstOperand, secondOperand);
                 if (result is "E" || result.Length > 8)
                 {
                     lblDisplay.Text = "Error";
@@ -175,11 +115,42 @@ namespace CPE200Lab1
                 {
                     lblDisplay.Text = result;
                 }
-                isAfterEqual = true;
-                morethan2 = false;
-                operate = "0";
             }
+            operate = ((Button)sender).Text;
+            switch (operate)
+            {
+                case "+":
+                case "-":
+                case "X":
+                case "÷":
+                    firstOperand = lblDisplay.Text;
+                    isAfterOperater = true;
+                    break;
+                case "%":
+                    // your code here
+                    break;
             }
+            isAllowBack = false;
+        }
+
+        private void btnEqual_Click(object sender, EventArgs e)
+        {
+            if (lblDisplay.Text is "Error")
+            {
+                return;
+            }
+            string secondOperand = lblDisplay.Text;
+            string result = engine.calculate(operate, firstOperand, secondOperand);
+            if (result is "E" || result.Length > 8)
+            {
+                lblDisplay.Text = "Error";
+            }
+            else
+            {
+                lblDisplay.Text = result;
+            }
+            isAfterEqual = true;
+        }
 
         private void btnDot_Click(object sender, EventArgs e)
         {
@@ -261,58 +232,38 @@ namespace CPE200Lab1
             }
         }
 
-        private void btnsqrt_Click(object sender, EventArgs e)
+        private void btnMP_Click(object sender, EventArgs e)
         {
-            if(operate=="0")
+            if(lblDisplay.Text is "Error")
             {
-                firstOperand = lblDisplay.Text;
-                double x= Convert.ToDouble(firstOperand);
-                x=Math.Sqrt(x);
-                firstOperand=Convert.ToString(x);
-                lblDisplay.Text = firstOperand;
-                isAfterEqual = true;
+                return;
             }
-            else
-            {
-                string secondOperand = lblDisplay.Text;
-                double x = Convert.ToDouble(secondOperand) ;
-                x = Math.Sqrt(x);
-                secondOperand = Convert.ToString(x);
-                firstOperand = calculatorEngine.calculate(operate, firstOperand, secondOperand);
-                lblDisplay.Text = "";
-                lblDisplay.Text = firstOperand;
-                morethan2 = true;
-                operate = "0";
-                morethan2 = true;
-            }
-
+            memory += Convert.ToDouble(lblDisplay.Text);
+            isAfterOperater = true;
         }
 
-        private void divinex(object sender, EventArgs e)
+        private void btnMC_Click(object sender, EventArgs e)
         {
-            if (operate == "0")
-            {
-                firstOperand = lblDisplay.Text;
-                double x = Convert.ToDouble(firstOperand);
-                x =1/x;
-                firstOperand = Convert.ToString(x);
-                lblDisplay.Text = firstOperand;
-                isAfterEqual = true;
-            }
-            else
-            {
-                string secondOperand = lblDisplay.Text;
-                double x = Convert.ToDouble(secondOperand);
-                x = 1 / x;
-                secondOperand = Convert.ToString(x);
-                firstOperand = calculatorEngine.calculate(operate, firstOperand, secondOperand);
-                lblDisplay.Text = "";
-                lblDisplay.Text = firstOperand;
-                morethan2 = true;
-                operate = "0";
-                morethan2 = true;
-            }
+            memory = 0;
+        }
 
+        private void btnMM_Click(object sender, EventArgs e)
+        {
+            if(lblDisplay.Text is "Error")
+            {
+                return;
+            }
+            memory -= Convert.ToDouble(lblDisplay.Text);
+            isAfterOperater = true;
+        }
+
+        private void btnMR_Click(object sender, EventArgs e)
+        {
+            if(lblDisplay.Text is "error")
+            {
+                return;
+            }
+            lblDisplay.Text = memory.ToString();
         }
     }
 }

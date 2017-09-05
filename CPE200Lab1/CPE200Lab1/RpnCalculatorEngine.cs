@@ -11,7 +11,7 @@ namespace CPE200Lab1
 
         private ExtendForm aform;
 
-        public string testStackMethod(string str)
+       public string testStackMethod(string str)
         {
             string[] word = str.Split(' ');
             string x = word[0];

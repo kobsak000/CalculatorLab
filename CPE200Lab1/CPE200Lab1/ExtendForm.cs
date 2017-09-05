@@ -13,20 +13,26 @@ namespace CPE200Lab1
     public partial class ExtendForm : Form
     {
         private bool isNumberPart = false;
-        private bool afterequal = false;
         private bool isContainDot = false;
-        private RpnCalculatorEngine engine;
+        private bool isSpaceAllowed = false;
+        private CalculatorEngine engine;
+
         public ExtendForm()
         {
             InitializeComponent();
-            engine = new RpnCalculatorEngine();
+            engine = new CalculatorEngine();
         }
 
-        public string getLastInString(string str)
+        private bool isOperator(char ch)
         {
-            if (str.Length is 1)
-                return str;
-            return str.Substring(str.Length - 1);
+            switch(ch) {
+                case '+':
+                case '-':
+                case 'X':
+                case '÷':
+                    return true;
+            }
+            return false;
         }
 
         private void btnNumber_Click(object sender, EventArgs e)
@@ -45,6 +51,7 @@ namespace CPE200Lab1
                 isContainDot = false;
             }
             lblDisplay.Text += ((Button)sender).Text;
+            isSpaceAllowed = true;
         }
 
         private void btnBinaryOperator_Click(object sender, EventArgs e)
@@ -55,7 +62,12 @@ namespace CPE200Lab1
             }
             isNumberPart = false;
             isContainDot = false;
-            lblDisplay.Text += " " + ((Button)sender).Text + " ";
+            string current = lblDisplay.Text;
+            if (current[current.Length - 1] != ' ')
+            {
+                lblDisplay.Text += " " + ((Button)sender).Text + " ";
+                isSpaceAllowed = false;
+            }
         }
 
         private void btnBack_Click(object sender, EventArgs e)
@@ -66,7 +78,7 @@ namespace CPE200Lab1
             }
             // check if the last one is operator
             string current = lblDisplay.Text;
-            if (getLastInString(current) is " ")
+            if (current[current.Length - 1] is ' ' && current.Length > 2 && isOperator(current[current.Length - 2]))
             {
                 lblDisplay.Text = current.Substring(0, current.Length - 3);
             } else
@@ -84,13 +96,11 @@ namespace CPE200Lab1
             lblDisplay.Text = "0";
             isContainDot = false;
             isNumberPart = false;
+            isSpaceAllowed = false;
         }
 
         private void btnEqual_Click(object sender, EventArgs e)
-
         {
-            //string current = lblDisplay.Text;
-            //lblDisplay.Text = engine.testStackMethod(current);
             string result = engine.Process(lblDisplay.Text);
             if (result is "E")
             {
@@ -115,7 +125,7 @@ namespace CPE200Lab1
             if (current is "0")
             {
                 lblDisplay.Text = "-";
-            } else if (getLastInString(current) is "-")
+            } else if (current[current.Length - 1] is '-')
             {
                 lblDisplay.Text = current.Substring(0, current.Length - 1);
                 if (lblDisplay.Text is "")
@@ -126,20 +136,34 @@ namespace CPE200Lab1
             {
                 lblDisplay.Text = current + "-";
             }
+            isSpaceAllowed = false;
         }
 
         private void btnDot_Click(object sender, EventArgs e)
         {
+            if (lblDisplay.Text is "Error")
+            {
+                return;
+            }
             if(!isContainDot)
             {
                 isContainDot = true;
                 lblDisplay.Text += ".";
+                isSpaceAllowed = false;
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnSpace_Click(object sender, EventArgs e)
         {
-           
+            if(lblDisplay.Text is "Error")
+            {
+                return;
+            }
+            if(isSpaceAllowed)
+            {
+                lblDisplay.Text += " ";
+                isSpaceAllowed = false;
+            }
         }
     }
 }

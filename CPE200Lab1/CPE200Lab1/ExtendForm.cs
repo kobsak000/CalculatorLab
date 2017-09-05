@@ -13,15 +13,16 @@ namespace CPE200Lab1
     public partial class ExtendForm : Form
     {
         private bool isNumberPart = false;
+        private bool afterequal = false;
         private bool isContainDot = false;
-        private CalculatorEngine engine;
+        private RpnCalculatorEngine engine;
         public ExtendForm()
         {
             InitializeComponent();
-            engine = new CalculatorEngine();
+            engine = new RpnCalculatorEngine();
         }
 
-        private string getLastInString(string str)
+        public string getLastInString(string str)
         {
             if (str.Length is 1)
                 return str;
@@ -86,7 +87,10 @@ namespace CPE200Lab1
         }
 
         private void btnEqual_Click(object sender, EventArgs e)
+
         {
+            //string current = lblDisplay.Text;
+            //lblDisplay.Text = engine.testStackMethod(current);
             string result = engine.Process(lblDisplay.Text);
             if (result is "E")
             {
@@ -131,6 +135,11 @@ namespace CPE200Lab1
                 isContainDot = true;
                 lblDisplay.Text += ".";
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+           
         }
     }
 }

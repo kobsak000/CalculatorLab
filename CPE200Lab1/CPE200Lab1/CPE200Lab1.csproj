@@ -52,6 +52,7 @@
     <Compile Include="ExtendForm.Designer.cs">
       <DependentUpon>ExtendForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="RPNForm.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -60,6 +61,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RpnCalculatorEngine.cs" />
     <EmbeddedResource Include="ExtendForm.resx">
       <DependentUpon>ExtendForm.cs</DependentUpon>
     </EmbeddedResource>

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using System.Collections;
 namespace CPE200Lab1
 {
     public partial class ExtendForm : Form
@@ -16,11 +16,12 @@ namespace CPE200Lab1
         private bool isContainDot = false;
         private bool isSpaceAllowed = false;
         private CalculatorEngine engine;
-
+        private RpnCalculatorEngine rpn;
         public ExtendForm()
         {
             InitializeComponent();
             engine = new CalculatorEngine();
+            rpn = new RpnCalculatorEngine();
         }
 
         private bool isOperator(char ch)
@@ -101,7 +102,9 @@ namespace CPE200Lab1
 
         private void btnEqual_Click(object sender, EventArgs e)
         {
-            string result = engine.Process(lblDisplay.Text);
+            string current = lblDisplay.Text;
+            string result = rpn.Method(current);
+           
             if (result is "E")
             {
                 lblDisplay.Text = "Error";
@@ -162,6 +165,22 @@ namespace CPE200Lab1
             if(isSpaceAllowed)
             {
                 lblDisplay.Text += " ";
+                isSpaceAllowed = false;
+            }
+        }
+
+        private void btnUnaryOperator_Click(object sender, EventArgs e)
+        {
+            if (lblDisplay.Text is "Error")
+            {
+                return;
+            }
+            isNumberPart = false;
+            isContainDot = false;
+            string current = lblDisplay.Text;
+            if (current[current.Length - 1] != ' ')
+            {
+                lblDisplay.Text += " " + ((Button)sender).Text + " ";
                 isSpaceAllowed = false;
             }
         }

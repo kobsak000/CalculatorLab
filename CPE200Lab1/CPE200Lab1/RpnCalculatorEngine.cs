@@ -21,8 +21,7 @@ namespace CPE200Lab1
             Stack processtack = new Stack();
 
             string first, second, op;
-            if (word[size-1] == "")
-                size -= 1;
+            
             for (int i =0;i<size;i++)
             {
                 if(word[i]== "√" || word[i] == "1/x")
@@ -31,17 +30,29 @@ namespace CPE200Lab1
                     first = processtack.Pop().ToString();
                     output =engine.unaryCalculate(op,first);
                     processtack.Push(output);
-                }else
-                if (word[i] == "+" || word[i] == "-" || word[i] == "X" || word[i] == "/")
+                }
+                else if (word[i] == "%")
                 {
                     second = processtack.Pop().ToString();
                     first = processtack.Pop().ToString();
+                    processtack.Push(first.ToString());
+                    output = engine.percent(first, second);
+                    processtack.Push(output);
+                    
+                }
+                else if (word[i] == "+" || word[i] == "-" || word[i] == "X" || word[i] == "/")
+                {
+                    
+                    second = processtack.Pop().ToString();
+                    first = processtack.Pop().ToString();
+                    
                     op = word[i];
                     output=engine.calculate(op, first, second);
                     processtack.Push(output);
                 }
                 else // if they put number
                 {
+                    if(word[i]!="")
                     processtack.Push(word[i]);
                 }
             }

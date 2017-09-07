@@ -38,6 +38,14 @@ namespace CPE200Lab1
             }
 
         }
+        public virtual string percent( string firstOperand, string secondOperand, int maxOutputSize = 8)
+        {
+            double result,x,y;
+            x = Convert.ToDouble(firstOperand);
+            y= Convert.ToDouble(secondOperand);
+            result = x / 100 * y;
+            return Convert.ToString(result);
+        }
         public virtual string unaryCalculate(string operate, string operand, int maxOutputSize = 8)
         {
             switch (operate)
@@ -82,6 +90,7 @@ namespace CPE200Lab1
                         return result.ToString("N" + remainLength);
                     }
                     break;
+                    
             }
             return "E";
         }
@@ -119,6 +128,7 @@ namespace CPE200Lab1
                     }
                     break;
                 case "%":
+                    
                     //your code here
                     break;
             }

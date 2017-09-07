@@ -12,6 +12,7 @@ namespace CPE200Lab1
 {
     public partial class ExtendForm : Form
     {
+        private bool isafterequal = false;
         private bool isNumberPart = false;
         private bool isContainDot = false;
         private bool isSpaceAllowed = false;
@@ -38,6 +39,11 @@ namespace CPE200Lab1
 
         private void btnNumber_Click(object sender, EventArgs e)
         {
+            if (isafterequal)
+            {
+                lblDisplay.Text = "0";
+                isafterequal = false;
+            }
             if (lblDisplay.Text is "Error")
             {
                 return;
@@ -104,7 +110,7 @@ namespace CPE200Lab1
         {
             string current = lblDisplay.Text;
             string result = rpn.Method(current);
-           
+            isafterequal = true;
             if (result is "E")
             {
                 lblDisplay.Text = "Error";

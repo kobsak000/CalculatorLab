@@ -21,14 +21,15 @@ namespace CPE200Lab1
             Stack processtack = new Stack();
 
             string first, second, op;
-
+            if (word[size-1] == "")
+                size -= 1;
             for (int i =0;i<size;i++)
             {
                 if(word[i]== "√" || word[i] == "1/x")
                 {
                     op = word[i];
                     first = processtack.Pop().ToString();
-                    output=engine.unaryCalculate(op,first);
+                    output =engine.unaryCalculate(op,first);
                     processtack.Push(output);
                 }else
                 if (word[i] == "+" || word[i] == "-" || word[i] == "X" || word[i] == "/")
@@ -44,8 +45,9 @@ namespace CPE200Lab1
                     processtack.Push(word[i]);
                 }
             }
-            
-            return output;
+            if (processtack.Count == 1)
+                return output;
+            return "E";
         }
 
          

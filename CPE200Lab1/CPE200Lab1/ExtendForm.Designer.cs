@@ -52,6 +52,10 @@
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
+            this.btnMM = new System.Windows.Forms.Button();
+            this.btnMP = new System.Windows.Forms.Button();
+            this.btnMR = new System.Windows.Forms.Button();
+            this.btnMC = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnBack
@@ -344,11 +348,63 @@
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.btnUnaryOperator_Click);
             // 
+            // btnMM
+            // 
+            this.btnMM.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnMM.Location = new System.Drawing.Point(392, 475);
+            this.btnMM.Margin = new System.Windows.Forms.Padding(4);
+            this.btnMM.Name = "btnMM";
+            this.btnMM.Size = new System.Drawing.Size(117, 79);
+            this.btnMM.TabIndex = 48;
+            this.btnMM.Text = "M-";
+            this.btnMM.UseVisualStyleBackColor = true;
+            this.btnMM.Click += new System.EventHandler(this.btnMM_Click);
+            // 
+            // btnMP
+            // 
+            this.btnMP.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnMP.Location = new System.Drawing.Point(267, 475);
+            this.btnMP.Margin = new System.Windows.Forms.Padding(4);
+            this.btnMP.Name = "btnMP";
+            this.btnMP.Size = new System.Drawing.Size(117, 79);
+            this.btnMP.TabIndex = 47;
+            this.btnMP.Text = "M+";
+            this.btnMP.UseVisualStyleBackColor = true;
+            this.btnMP.Click += new System.EventHandler(this.btnMP_Click);
+            // 
+            // btnMR
+            // 
+            this.btnMR.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnMR.Location = new System.Drawing.Point(141, 475);
+            this.btnMR.Margin = new System.Windows.Forms.Padding(4);
+            this.btnMR.Name = "btnMR";
+            this.btnMR.Size = new System.Drawing.Size(117, 79);
+            this.btnMR.TabIndex = 46;
+            this.btnMR.Text = "MR";
+            this.btnMR.UseVisualStyleBackColor = true;
+            this.btnMR.Click += new System.EventHandler(this.btnMR_Click);
+            // 
+            // btnMC
+            // 
+            this.btnMC.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnMC.Location = new System.Drawing.Point(16, 475);
+            this.btnMC.Margin = new System.Windows.Forms.Padding(4);
+            this.btnMC.Name = "btnMC";
+            this.btnMC.Size = new System.Drawing.Size(117, 79);
+            this.btnMC.TabIndex = 45;
+            this.btnMC.Text = "MC";
+            this.btnMC.UseVisualStyleBackColor = true;
+            this.btnMC.Click += new System.EventHandler(this.btnMC_Click);
+            // 
             // ExtendForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(765, 475);
+            this.ClientSize = new System.Drawing.Size(765, 565);
+            this.Controls.Add(this.btnMM);
+            this.Controls.Add(this.btnMP);
+            this.Controls.Add(this.btnMR);
+            this.Controls.Add(this.btnMC);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.button2);
@@ -376,6 +432,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "ExtendForm";
             this.Text = "ExtendForm";
+            this.Load += new System.EventHandler(this.ExtendForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -407,5 +464,9 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button btnMM;
+        private System.Windows.Forms.Button btnMP;
+        private System.Windows.Forms.Button btnMR;
+        private System.Windows.Forms.Button btnMC;
     }
 }

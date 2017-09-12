@@ -8,12 +8,8 @@ using System.Collections;  //to use Stack
 namespace CPE200Lab1
 {
     class RpnCalculatorEngine : CalculatorEngine {
-        private CalculatorEngine engine;
-        public RpnCalculatorEngine()
-        {
-            engine = new CalculatorEngine();   
-        }
-        public string Method(string str)
+        
+        public string RPNProcess(string str)
         {
             string[] word = str.Split(' ');
             string output=null;
@@ -28,26 +24,28 @@ namespace CPE200Lab1
                 {
                     op = word[i];
                     first = processtack.Pop().ToString();
-                    output =engine.unaryCalculate(op,first);
+                    output =unaryCalculate(op,first);
                     processtack.Push(output);
                 }
                 else if (word[i] == "%")
                 {
                     second = processtack.Pop().ToString();
+                    if (processtack.Count == 0)
+                        return "E";
                     first = processtack.Pop().ToString();
                     processtack.Push(first.ToString());
-                    output = engine.percent(first, second);
+                    output = percent(first, second);
                     processtack.Push(output);
                     
                 }
-                else if (word[i] == "+" || word[i] == "-" || word[i] == "X" || word[i] == "/")
+                else if (word[i] == "+" || word[i] == "-" || word[i] == "X" || word[i] == "÷")
                 {
                     
                     second = processtack.Pop().ToString();
                     first = processtack.Pop().ToString();
                     
                     op = word[i];
-                    output=engine.calculate(op, first, second);
+                    output=calculate(op, first, second);
                     processtack.Push(output);
                 }
                 else // if they put number

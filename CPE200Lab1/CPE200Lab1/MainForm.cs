@@ -150,6 +150,7 @@ namespace CPE200Lab1
                 lblDisplay.Text = result;
             }
             isAfterEqual = true;
+            hasDot = false;
         }
 
         private void btnDot_Click(object sender, EventArgs e)

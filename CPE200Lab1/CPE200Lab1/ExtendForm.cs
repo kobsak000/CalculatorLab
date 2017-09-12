@@ -12,6 +12,7 @@ namespace CPE200Lab1
 {
     public partial class ExtendForm : Form
     {
+        private double memory;
         private bool isafterequal = false;
         private bool isNumberPart = false;
         private bool isContainDot = false;
@@ -73,7 +74,7 @@ namespace CPE200Lab1
            
                 lblDisplay.Text += " " + ((Button)sender).Text + " ";
                 isSpaceAllowed = false;
-            
+            isContainDot = false;
         }
 
         private void btnBack_Click(object sender, EventArgs e)
@@ -108,8 +109,13 @@ namespace CPE200Lab1
         private void btnEqual_Click(object sender, EventArgs e)
         {
             string current = lblDisplay.Text;
-            string result = rpn.Method(current);
+            string result = rpn.RPNProcess(current);
+            if(lblDisplay.Text==" ")
+            {
+                lblDisplay.Text = "0";
+            }
             isafterequal = true;
+            
             if (result is "E")
             {
                 lblDisplay.Text = "Error";
@@ -127,6 +133,17 @@ namespace CPE200Lab1
             }
             if (isNumberPart)
             {
+                string x="0";
+                x = lblDisplay.Text;
+                if (x[0] != '-')
+                x= "-" + x;
+                else
+                {
+
+                    x=x.Remove(0,1);
+
+                }
+                lblDisplay.Text = x.ToString();
                 return;
             }
             string current = lblDisplay.Text;
@@ -171,6 +188,7 @@ namespace CPE200Lab1
             {
                 lblDisplay.Text += " ";
                 isSpaceAllowed = false;
+                isContainDot = false;
             }
         }
 
@@ -187,6 +205,44 @@ namespace CPE200Lab1
                 lblDisplay.Text += " " + ((Button)sender).Text + " ";
                 isSpaceAllowed = false;
             
+        }
+        private void btnMP_Click(object sender, EventArgs e)
+        {
+            if (lblDisplay.Text is "Error")
+            {
+                return;
+            }
+            memory += Convert.ToDouble(lblDisplay.Text);
+            
+        }
+
+        private void btnMC_Click(object sender, EventArgs e)
+        {
+            memory = 0;
+        }
+
+        private void btnMM_Click(object sender, EventArgs e)
+        {
+            if (lblDisplay.Text is "Error")
+            {
+                return;
+            }
+            memory -= Convert.ToDouble(lblDisplay.Text);
+            
+        }
+
+        private void btnMR_Click(object sender, EventArgs e)
+        {
+            if (lblDisplay.Text is "error")
+            {
+                return;
+            }
+            lblDisplay.Text = memory.ToString();
+        }
+
+        private void ExtendForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

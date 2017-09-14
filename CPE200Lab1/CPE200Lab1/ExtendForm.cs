@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Collections;
+
 namespace CPE200Lab1
 {
     public partial class ExtendForm : Form
@@ -17,13 +17,12 @@ namespace CPE200Lab1
         private bool isNumberPart = false;
         private bool isContainDot = false;
         private bool isSpaceAllowed = false;
-        private CalculatorEngine engine;
-        private RpnCalculatorEngine rpn;
+        private RPNCalculatorEngine engine;
+
         public ExtendForm()
         {
             InitializeComponent();
-            engine = new CalculatorEngine();
-            rpn = new RpnCalculatorEngine();
+            engine = new RPNCalculatorEngine();
         }
 
         private bool isOperator(char ch)
@@ -40,14 +39,14 @@ namespace CPE200Lab1
 
         private void btnNumber_Click(object sender, EventArgs e)
         {
-            if (isafterequal)
+            if(isafterequal)
             {
                 lblDisplay.Text = "0";
-                isafterequal = false;
             }
             if (lblDisplay.Text is "Error")
             {
-                return;
+                lblDisplay.Text = "0";
+               
             }
             if (lblDisplay.Text is "0")
             {
@@ -71,10 +70,11 @@ namespace CPE200Lab1
             isNumberPart = false;
             isContainDot = false;
             string current = lblDisplay.Text;
-           
+            if (current[current.Length - 1] != ' ' || isOperator(current[current.Length - 2]))
+            {
                 lblDisplay.Text += " " + ((Button)sender).Text + " ";
                 isSpaceAllowed = false;
-            isContainDot = false;
+            }
         }
 
         private void btnBack_Click(object sender, EventArgs e)
@@ -108,20 +108,26 @@ namespace CPE200Lab1
 
         private void btnEqual_Click(object sender, EventArgs e)
         {
-            string current = lblDisplay.Text;
-            string result = rpn.RPNProcess(current);
-            if(lblDisplay.Text==" ")
+            if (lblDisplay.Text == "" || lblDisplay.Text == "0" || lblDisplay.Text == " ")
             {
-                lblDisplay.Text = "0";
+
             }
-            isafterequal = true;
-            
-            if (result is "E")
+            else
             {
-                lblDisplay.Text = "Error";
-            } else
-            {
-                lblDisplay.Text = result;
+                string result = engine.Process(lblDisplay.Text);
+                if (result is "E")
+                {
+                    lblDisplay.Text = "Error";
+                }
+
+                else
+                {
+                    lblDisplay.Text = result;
+                    isSpaceAllowed = true;
+                    isContainDot = false;
+                    isNumberPart = true;
+                    isafterequal = true;
+                }
             }
         }
 
@@ -133,17 +139,6 @@ namespace CPE200Lab1
             }
             if (isNumberPart)
             {
-                string x="0";
-                x = lblDisplay.Text;
-                if (x[0] != '-')
-                x= "-" + x;
-                else
-                {
-
-                    x=x.Remove(0,1);
-
-                }
-                lblDisplay.Text = x.ToString();
                 return;
             }
             string current = lblDisplay.Text;
@@ -180,7 +175,8 @@ namespace CPE200Lab1
 
         private void btnSpace_Click(object sender, EventArgs e)
         {
-            if(lblDisplay.Text is "Error")
+            isContainDot = false;
+            if (lblDisplay.Text is "Error")
             {
                 return;
             }
@@ -188,24 +184,9 @@ namespace CPE200Lab1
             {
                 lblDisplay.Text += " ";
                 isSpaceAllowed = false;
-                isContainDot = false;
             }
         }
 
-        private void btnUnaryOperator_Click(object sender, EventArgs e)
-        {
-            if (lblDisplay.Text is "Error")
-            {
-                return;
-            }
-            isNumberPart = false;
-            isContainDot = false;
-            string current = lblDisplay.Text;
-            
-                lblDisplay.Text += " " + ((Button)sender).Text + " ";
-                isSpaceAllowed = false;
-            
-        }
         private void btnMP_Click(object sender, EventArgs e)
         {
             if (lblDisplay.Text is "Error")
@@ -213,7 +194,7 @@ namespace CPE200Lab1
                 return;
             }
             memory += Convert.ToDouble(lblDisplay.Text);
-            
+
         }
 
         private void btnMC_Click(object sender, EventArgs e)
@@ -228,7 +209,7 @@ namespace CPE200Lab1
                 return;
             }
             memory -= Convert.ToDouble(lblDisplay.Text);
-            
+
         }
 
         private void btnMR_Click(object sender, EventArgs e)
@@ -240,8 +221,18 @@ namespace CPE200Lab1
             lblDisplay.Text = memory.ToString();
         }
 
-        private void ExtendForm_Load(object sender, EventArgs e)
+        private void btnUnaryOperator_Click(object sender, EventArgs e)
         {
+            if (lblDisplay.Text is "Error")
+            {
+                return;
+            }
+            isNumberPart = false;
+            isContainDot = false;
+            string current = lblDisplay.Text;
+
+            lblDisplay.Text += " " + ((Button)sender).Text ;
+            isSpaceAllowed = false;
 
         }
     }

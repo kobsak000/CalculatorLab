@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace CPE200Lab1
 {
-    class CalculatorEngine
+    public class CalculatorEngine
     {
-        private bool isNumber(string str)
+        public bool isNumber(string str)
         {
             double retNum;
             return Double.TryParse(str, out retNum);
         }
 
-        private bool isOperator(string str)
+        public bool isOperator(string str)
         {
             switch(str) {
                 case "+":
@@ -46,6 +46,8 @@ namespace CPE200Lab1
             result = x / 100 * y;
             return Convert.ToString(result);
         }
+
+
         public virtual string unaryCalculate(string operate, string operand, int maxOutputSize = 8)
         {
             switch (operate)

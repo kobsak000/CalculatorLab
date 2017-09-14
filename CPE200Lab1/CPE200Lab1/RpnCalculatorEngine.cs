@@ -3,65 +3,62 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Collections;  //to use Stack
 
 namespace CPE200Lab1
 {
-    class RpnCalculatorEngine : CalculatorEngine {
-        
-        public string RPNProcess(string str)
+    public class RPNCalculatorEngine : CalculatorEngine
+    {
+        public new string Process(string str)
         {
-            string[] word = str.Split(' ');
-            string output=null;
-            int size = word.Length;
-            Stack processtack = new Stack();
+            Stack<string> rpnStack = new Stack<string>();
+            List<string> parts = str.Split(' ').ToList<string>();
+            string result;
+            string firstOperand, secondOperand;
 
-            string first, second, op;
-            
-            for (int i =0;i<size;i++)
+            foreach (string token in parts)
             {
-                if(word[i]== "√" || word[i] == "1/x")
+                if (token == "√" || token == "1/x")
                 {
-                    op = word[i];
-                    first = processtack.Pop().ToString();
-                    output =unaryCalculate(op,first);
-                    processtack.Push(output);
+                    
+                    firstOperand = rpnStack.Pop().ToString();
+                    result = unaryCalculate(token, firstOperand);
+                    rpnStack.Push(result);
                 }
-                else if (word[i] == "%")
+                else if (token == "%")
                 {
-                    second = processtack.Pop().ToString();
-                    if (processtack.Count == 0)
+                    secondOperand = rpnStack.Pop().ToString();
+                    if (rpnStack.Count == 0)
                         return "E";
-                    first = processtack.Pop().ToString();
-                    processtack.Push(first.ToString());
-                    output = percent(first, second);
-                    processtack.Push(output);
-                    
+                    firstOperand = rpnStack.Pop().ToString();
+                    rpnStack.Push(firstOperand.ToString());
+                    result = percent(firstOperand, secondOperand);
+                    rpnStack.Push(result);
+
                 }
-                else if (word[i] == "+" || word[i] == "-" || word[i] == "X" || word[i] == "÷")
+                else if (isNumber(token))
                 {
-                    
-                    second = processtack.Pop().ToString();
-                    first = processtack.Pop().ToString();
-                    
-                    op = word[i];
-                    output=calculate(op, first, second);
-                    processtack.Push(output);
+                    rpnStack.Push(token);
                 }
-                else // if they put number
+                else if (isOperator(token))
                 {
-                    if(word[i]!="")
-                    processtack.Push(word[i]);
+                    //FIXME, what if there is only one left in stack?
+                    if (rpnStack.Count == 0 || rpnStack.Count == 1)
+                        return "E";
+                    secondOperand = rpnStack.Pop();
+                    firstOperand = rpnStack.Pop();
+                    result = calculate(token, firstOperand, secondOperand, 4);
+                    if (result is "E")
+                    {
+                        return result;
+                    }
+                    rpnStack.Push(result);
                 }
             }
-            if (processtack.Count == 1)
-                return output;
-            return "E";
+            //FIXME, what if there is more than one, or zero, items in the stack?
+            if (rpnStack.Count != 1 )
+                return "E";
+            result = rpnStack.Pop();
+            return result;
         }
-
-         
     }
-
-    
-
 }

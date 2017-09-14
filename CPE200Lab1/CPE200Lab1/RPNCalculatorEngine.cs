@@ -24,6 +24,8 @@ namespace CPE200Lab1
                 else if (isOperator(token))
                 {
                     //FIXME, what if there is only one left in stack?
+                    if (rpnStack.Count == 0 || rpnStack.Count == 1)
+                        return "E";
                     secondOperand = rpnStack.Pop();
                     firstOperand = rpnStack.Pop();
                     result = calculate(token, firstOperand, secondOperand, 4);
@@ -35,6 +37,8 @@ namespace CPE200Lab1
                 }
             }
             //FIXME, what if there is more than one, or zero, items in the stack?
+            if (rpnStack.Count != 1)
+                return "E";
             result = rpnStack.Pop();
             return result;
         }

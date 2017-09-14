@@ -12,6 +12,7 @@ namespace CPE200Lab1
 {
     public partial class ExtendForm : Form
     {
+        private bool isafterequal = false;
         private bool isNumberPart = false;
         private bool isContainDot = false;
         private bool isSpaceAllowed = false;
@@ -37,9 +38,14 @@ namespace CPE200Lab1
 
         private void btnNumber_Click(object sender, EventArgs e)
         {
+            if(isafterequal)
+            {
+                lblDisplay.Text = "0";
+            }
             if (lblDisplay.Text is "Error")
             {
-                return;
+                lblDisplay.Text = "0";
+               
             }
             if (lblDisplay.Text is "0")
             {
@@ -101,16 +107,26 @@ namespace CPE200Lab1
 
         private void btnEqual_Click(object sender, EventArgs e)
         {
-            string result = engine.Process(lblDisplay.Text);
-            if (result is "E")
+            if (lblDisplay.Text == "" || lblDisplay.Text == "0" || lblDisplay.Text == " ")
             {
-                lblDisplay.Text = "Error";
-            } else
+
+            }
+            else
             {
-                lblDisplay.Text = result;
-                isSpaceAllowed = true;
-                isContainDot = false;
-                isNumberPart = true;
+                string result = engine.Process(lblDisplay.Text);
+                if (result is "E")
+                {
+                    lblDisplay.Text = "Error";
+                }
+
+                else
+                {
+                    lblDisplay.Text = result;
+                    isSpaceAllowed = true;
+                    isContainDot = false;
+                    isNumberPart = true;
+                    isafterequal = true;
+                }
             }
         }
 
@@ -158,7 +174,8 @@ namespace CPE200Lab1
 
         private void btnSpace_Click(object sender, EventArgs e)
         {
-            if(lblDisplay.Text is "Error")
+            isContainDot = false;
+            if (lblDisplay.Text is "Error")
             {
                 return;
             }

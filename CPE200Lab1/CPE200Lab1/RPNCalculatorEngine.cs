@@ -17,7 +17,25 @@ namespace CPE200Lab1
 
             foreach (string token in parts)
             {
-                if (isNumber(token))
+                if (token == "√" || token == "1/x")
+                {
+
+                    firstOperand = rpnStack.Pop().ToString();
+                    result = unaryCalculate(token, firstOperand);
+                    rpnStack.Push(result);
+                }
+                else if (token == "%")
+                {
+                    secondOperand = rpnStack.Pop().ToString();
+                    if (rpnStack.Count == 0)
+                        return "E";
+                    firstOperand = rpnStack.Pop().ToString();
+                    rpnStack.Push(firstOperand.ToString());
+                    result = percent(firstOperand, secondOperand);
+                    rpnStack.Push(result);
+
+                }
+                else if (isNumber(token))
                 {
                     rpnStack.Push(token);
                 }

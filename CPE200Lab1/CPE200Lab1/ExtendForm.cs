@@ -59,6 +59,7 @@ namespace CPE200Lab1
             }
             lblDisplay.Text += ((Button)sender).Text;
             isSpaceAllowed = true;
+            isafterequal = false;
         }
 
         private void btnBinaryOperator_Click(object sender, EventArgs e)
@@ -108,12 +109,8 @@ namespace CPE200Lab1
 
         private void btnEqual_Click(object sender, EventArgs e)
         {
-            if (lblDisplay.Text == "" || lblDisplay.Text == "0" || lblDisplay.Text == " ")
-            {
-
-            }
-            else
-            {
+            
+            
                 string result = engine.Process(lblDisplay.Text);
                 if (result is "E")
                 {
@@ -128,7 +125,7 @@ namespace CPE200Lab1
                     isNumberPart = true;
                     isafterequal = true;
                 }
-            }
+            
         }
 
         private void btnSign_Click(object sender, EventArgs e)
@@ -175,6 +172,7 @@ namespace CPE200Lab1
 
         private void btnSpace_Click(object sender, EventArgs e)
         {
+            isafterequal = false;
             isContainDot = false;
             if (lblDisplay.Text is "Error")
             {
@@ -185,6 +183,8 @@ namespace CPE200Lab1
                 lblDisplay.Text += " ";
                 isSpaceAllowed = false;
             }
+            
+
         }
 
         private void btnMP_Click(object sender, EventArgs e)
@@ -233,6 +233,11 @@ namespace CPE200Lab1
 
             lblDisplay.Text += " " + ((Button)sender).Text;
             isSpaceAllowed = false;
+
+        }
+
+        private void lblDisplay_Click(object sender, EventArgs e)
+        {
 
         }
     }

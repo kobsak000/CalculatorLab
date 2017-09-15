@@ -28,6 +28,11 @@ namespace CPE200Lab1
 
         public string Process(string str)
         {
+            if (str == "0")
+                return "0";
+
+            if (str == null || str == "")
+                return "E";
             //Split input string to multiple parts by space
             List<string> parts = str.Split(' ').ToList<string>();
             string result;
@@ -137,7 +142,25 @@ namespace CPE200Lab1
                         // calculate remaining space for fractional part.
                         remainLength = maxOutputSize - parts[0].Length - 1;
                         // trim the fractional part gracefully. =
-                        return result.ToString("N" + remainLength);
+
+                        if((Convert.ToDouble(firstOperand) % Convert.ToDouble(secondOperand))==0)
+                        {
+                            return Convert.ToString(Convert.ToInt32(result));
+                        }
+                        //string.Format("{0:G29}", decimal.Parse(Convert.ToString(result)));
+                        //decimal.Parse(result).ToString("G29");
+                        double r;
+                        string h;
+                        h= result.ToString("N4");
+                        string[] deci= h.Split('.');
+                        r=Convert.ToDouble(deci[1]);
+                        if(r%10==0 || Convert.ToDouble(deci[1]) % 100 == 0 || Convert.ToDouble(deci[1]) % 1000 == 0 || Convert.ToDouble(deci[1]) % 10000== 0)
+                        {
+                            //return result.ToString("N4");
+                            return result.ToString("G29");
+                        }
+                        //return result.ToString("G29");
+                        return result.ToString("N4");
                     }
                     break;
                 case "%":

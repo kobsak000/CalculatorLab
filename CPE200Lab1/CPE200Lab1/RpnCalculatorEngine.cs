@@ -19,7 +19,7 @@ namespace CPE200Lab1
             {
                 if (token == "√" || token == "1/x")
                 {
-                    
+
                     firstOperand = rpnStack.Pop().ToString();
                     result = unaryCalculate(token, firstOperand);
                     rpnStack.Push(result);
@@ -55,7 +55,7 @@ namespace CPE200Lab1
                 }
             }
             //FIXME, what if there is more than one, or zero, items in the stack?
-            if (rpnStack.Count != 1 )
+            if (rpnStack.Count != 1)
                 return "E";
             result = rpnStack.Pop();
             return result;

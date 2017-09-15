@@ -57,7 +57,6 @@ namespace CPE200Lab1
                 isNumberPart = true;
                 isContainDot = false;
             }
-            isafterequal = false;
             lblDisplay.Text += ((Button)sender).Text;
             isSpaceAllowed = true;
         }
@@ -232,13 +231,8 @@ namespace CPE200Lab1
             isContainDot = false;
             string current = lblDisplay.Text;
 
-            lblDisplay.Text += " " + ((Button)sender).Text ;
+            lblDisplay.Text += " " + ((Button)sender).Text;
             isSpaceAllowed = false;
-
-        }
-
-        private void ExtendForm_Load(object sender, EventArgs e)
-        {
 
         }
     }

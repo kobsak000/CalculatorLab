@@ -12,6 +12,7 @@ namespace CPE200Lab1
 {
     public partial class ExtendForm : Form
     {
+        private double memory;
         private bool isafterequal = false;
         private bool isNumberPart = false;
         private bool isContainDot = false;
@@ -184,6 +185,55 @@ namespace CPE200Lab1
                 lblDisplay.Text += " ";
                 isSpaceAllowed = false;
             }
+        }
+
+        private void btnMP_Click(object sender, EventArgs e)
+        {
+            if (lblDisplay.Text is "Error")
+            {
+                return;
+            }
+            memory += Convert.ToDouble(lblDisplay.Text);
+
+        }
+
+        private void btnMC_Click(object sender, EventArgs e)
+        {
+            memory = 0;
+        }
+
+        private void btnMM_Click(object sender, EventArgs e)
+        {
+            if (lblDisplay.Text is "Error")
+            {
+                return;
+            }
+            memory -= Convert.ToDouble(lblDisplay.Text);
+
+        }
+
+        private void btnMR_Click(object sender, EventArgs e)
+        {
+            if (lblDisplay.Text is "error")
+            {
+                return;
+            }
+            lblDisplay.Text = memory.ToString();
+        }
+
+        private void btnUnaryOperator_Click(object sender, EventArgs e)
+        {
+            if (lblDisplay.Text is "Error")
+            {
+                return;
+            }
+            isNumberPart = false;
+            isContainDot = false;
+            string current = lblDisplay.Text;
+
+            lblDisplay.Text += " " + ((Button)sender).Text;
+            isSpaceAllowed = false;
+
         }
     }
 }

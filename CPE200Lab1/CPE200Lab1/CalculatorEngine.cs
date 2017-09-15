@@ -99,6 +99,15 @@ namespace CPE200Lab1
             return "E";
         }
 
+        public virtual string percent(string firstOperand, string secondOperand, int maxOutputSize = 8)
+        {
+            double result, x, y;
+            x = Convert.ToDouble(firstOperand);
+            y = Convert.ToDouble(secondOperand);
+            result = x / 100 * y;
+            return Convert.ToString(result);
+        }
+
         public string calculate(string operate, string firstOperand, string secondOperand, int maxOutputSize = 8)
         {
             switch (operate)

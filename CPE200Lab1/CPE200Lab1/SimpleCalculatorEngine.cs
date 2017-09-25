@@ -6,23 +6,26 @@ using System.Threading.Tasks;
 
 namespace CPE200Lab1
 {
-
-    public class RPNCalculatorEngine : CalculatorEngine
+    class SimpleCalculatorEngine:CalculatorEngine
     {
-        public Stack<string> rpnStack = new Stack<string>();
+        protected double firstOperand;
+        protected double secondOperand;
 
-        protected string firstOperand;
-        protected string secondOperand;
-        public string calculate(string operand)
+        public void setFirstOperand(string num)
         {
-            double result;
-            int maxOutputSize = 8;
-            switch (operand)
+            firstOperand = Convert.ToDouble(num);
+        }
+        public void setSecondOperand(string num)
+        {
+            secondOperand = Convert.ToDouble(num);
+        }
+        public string calculate(string operate, string operand, int maxOutputSize = 8)
+        {
+            switch (operate)
             {
-
                 case "√":
                     {
-
+                        double result;
                         string[] parts;
                         int remainLength;
 
@@ -42,7 +45,7 @@ namespace CPE200Lab1
                 case "1/x":
                     if (operand != "0")
                     {
-
+                        double result;
                         string[] parts;
                         int remainLength;
 
@@ -59,7 +62,16 @@ namespace CPE200Lab1
                         // trim the fractional part gracefully. =
                         return result.ToString("N" + remainLength);
                     }
-                    else return "E";
+                    break;
+            }
+            return "E";
+        }
+        public string calculate(string oper)
+        {
+            double result;
+            int maxOutputSize = 8;
+            switch (oper)
+            {
                 case "+":
                     return (Convert.ToDouble(firstOperand) + Convert.ToDouble(secondOperand)).ToString();
                 case "-":
@@ -68,9 +80,9 @@ namespace CPE200Lab1
                     return (Convert.ToDouble(firstOperand) * Convert.ToDouble(secondOperand)).ToString();
                 case "÷":
                     // Not allow devide be zero
-                    if (secondOperand != "0")
+                    if (secondOperand != 0)
                     {
-
+                        
                         string[] parts;
                         int remainLength;
 
@@ -105,10 +117,9 @@ namespace CPE200Lab1
                         //return result.ToString("G29");
                         return result.ToString("N4");
                     }
-                    else return "E";
-
+                    break;
                 case "%":
-                    double x, y;
+                    double  x, y;
                     x = Convert.ToDouble(firstOperand);
                     y = Convert.ToDouble(secondOperand);
                     result = x / 100 * y;
@@ -116,95 +127,7 @@ namespace CPE200Lab1
 
             }
             return "E";
-        }
-        public new string Process(string str)
-        {
-            if (str == "0")
-                return "0";
-
-            if (str == "" || str == null)
-                return "E";
-            //bool isNumeric = int.TryParse(str);
-            List<string> parts = str.Split(' ').ToList<string>();
-            string result;
            
-
-
-
-            foreach (string token in parts)
-            {
-                if (token == "√" || token == "1/x")
-                {
-
-                    firstOperand = rpnStack.Pop().ToString();
-                    result = calculate(token);
-                    rpnStack.Push(result);
-                }
-                else if (token == "%")
-                {
-                    secondOperand = rpnStack.Pop().ToString();
-                    if (rpnStack.Count == 0)
-                        return "E";
-                    firstOperand = rpnStack.Pop().ToString();
-                    rpnStack.Push(firstOperand.ToString());
-                    result = calculate(token);
-                    rpnStack.Push(result);
-
-                }
-
-                else if (isOperator(token))
-                {
-
-                    //FIXME, what if there is only one left in stack?
-                    if (rpnStack.Count < 2)
-                        return "E";
-                    secondOperand = rpnStack.Pop();
-                    firstOperand = rpnStack.Pop();
-                    result = calculate(token);
-                    if (result is "E")
-                    {
-                        return result;
-                    }
-                    rpnStack.Push(result);
-                }
-                else if (isNumber(token))
-                {
-                    int i;
-                    for (i = 0; i < token.Length; i++)
-                    {
-                        if (token[i] == '+')
-                            return "E";
-                    }
-                    rpnStack.Push(token);
-                }
-                else
-                {
-                    int i;
-                    for (i = 0; i < token.Length; i++)
-                    {
-                        if (token[i] == '+')
-                        {
-                            if (token.Length > 1)
-                            {
-                                return "E";
-                            }
-                        }
-                    }
-                }
-
-            }
-            //FIXME, what if there is more than one, or zero, items in the stack?
-            if (rpnStack.Count != 1)
-                return "E";
-            result = rpnStack.Pop();
-            return result;
         }
     }
-
 }
-
-        
-    
-
-
-

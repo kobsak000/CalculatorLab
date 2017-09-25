@@ -56,7 +56,7 @@ namespace CPE200Lab1
             }
             return parts[0];
         }
-        public string unaryCalculate(string operate, string operand, int maxOutputSize = 8)
+        public string calculate(string operate, string operand, int maxOutputSize = 8)
         {
             switch (operate)
             {
@@ -104,17 +104,11 @@ namespace CPE200Lab1
             return "E";
         }
 
-        public virtual string percent(string firstOperand, string secondOperand, int maxOutputSize = 8)
-        {
-            double result, x, y;
-            x = Convert.ToDouble(firstOperand);
-            y = Convert.ToDouble(secondOperand);
-            result = x / 100 * y;
-            return Convert.ToString(result);
-        }
+     
 
         public string calculate(string operate, string firstOperand, string secondOperand, int maxOutputSize = 8)
         {
+            double result;
             switch (operate)
             {
                 case "+":
@@ -127,7 +121,7 @@ namespace CPE200Lab1
                     // Not allow devide be zero
                     if (secondOperand != "0")
                     {
-                        double result;
+                        
                         string[] parts;
                         int remainLength;
 
@@ -164,8 +158,12 @@ namespace CPE200Lab1
                     }
                     break;
                 case "%":
-                    //your code here
-                    break;
+                    double  x, y;
+                    x = Convert.ToDouble(firstOperand);
+                    y = Convert.ToDouble(secondOperand);
+                    result = x / 100 * y;
+                    return Convert.ToString(result);
+                   
             }
             return "E";
         }
